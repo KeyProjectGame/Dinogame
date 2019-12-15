@@ -16,7 +16,7 @@ public class CamerMovement : MonoBehaviour
     {
         if (playerControlScript.level2 == true)
         {
-            gameObject.transform.position = new Vector3 (13.71388f, -4.7f, -89.44528f);
+            gameObject.transform.position = new Vector3 (14.3f, -5, -89.57f);
         }
     }
 }

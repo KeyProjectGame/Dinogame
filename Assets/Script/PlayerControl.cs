@@ -40,7 +40,7 @@ public class PlayerControl : MonoBehaviour
 
    private void Level1()
     {
-        if (Input.touchCount > 0 && isOnGround && level1 && gameManager.isGameActive == true)
+        if ((Input.GetKeyDown(KeyCode.Space) || Input.touchCount > 0) && isOnGround && level1 && gameManager.isGameActive == true)
         {
             playerRB.velocity = new Vector2(playerRB.velocity.x, jumpForce);
             isOnGround = false;
@@ -49,7 +49,7 @@ public class PlayerControl : MonoBehaviour
 
     private void Level2()
     {
-        if (Input.touchCount > 0 && level2 && gameManager.isGameActive == true)
+        if ((Input.GetKeyDown(KeyCode.Space) || Input.touchCount > 0) && level2 && gameManager.isGameActive == true)
         {
 
             playerRB.AddForce(Vector2.up * floatForce);
@@ -66,7 +66,7 @@ public class PlayerControl : MonoBehaviour
             isOnGround = true;
         }
 
-        if (collision.gameObject.CompareTag("Stone") || collision.gameObject.CompareTag("Obstacle"))
+        if (collision.gameObject.CompareTag("Stone"))
         {
             Destroy(gameObject);
             gameManager.GameOver();
@@ -80,7 +80,7 @@ public class PlayerControl : MonoBehaviour
         {
             Destroy(other.gameObject);
             gameManager.score += 5;
-            gameManager.scoreOverText.text = "Score: " + gameManager.score;
+            gameManager.scoreText.text = "Score: " + gameManager.score;
         }
 
         if (other.gameObject.CompareTag("Lvl_2"))

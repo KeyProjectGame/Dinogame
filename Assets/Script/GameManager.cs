@@ -8,16 +8,15 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     public TextMeshProUGUI gameOverText;
-    public TextMeshProUGUI scoreOverText;
+    public TextMeshProUGUI scoreText;
     public GameObject titleScreen;
     public Button restartButton;
-    public bool isGameActive;
     public int score;
+    public bool isGameActive = false;
+    private Button play;
     // Start is called before the first frame update
     void Start()
     {
-        isGameActive = true;
-        titleScreen.SetActive(false);
         score = 0;
     }
 
@@ -39,6 +38,14 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
+    
+    public void StartGame()
+    {
+        titleScreen.SetActive(false);
+        isGameActive = true;
+        
+
+    }
 
 
 }

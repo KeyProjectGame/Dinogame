@@ -6,6 +6,7 @@ public class SetActive : MonoBehaviour
 {
 
     public GameObject activeObject;
+    public GameObject activeObject_2;
     public bool activeateme;
     private PlayerControl playerControlScript;
     // Update is called once per frame
@@ -20,6 +21,7 @@ public class SetActive : MonoBehaviour
         if (playerControlScript.level2 == true)
         {
             activeObject.SetActive(true);
+            activeObject_2.SetActive(true);
         }
     }
 
