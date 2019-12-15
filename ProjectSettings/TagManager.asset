@@ -9,6 +9,8 @@ TagManager:
   - stick
   - Stone
   - Ground_2
+  - Lvl_2
+  - SpawnManagerStone
   layers:
   - Default
   - TransparentFX

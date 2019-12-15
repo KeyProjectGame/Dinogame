@@ -8,6 +8,8 @@ public class PlayerControl : MonoBehaviour
     [SerializeField] bool isOnGround = true;
     [SerializeField] float floatForce = 7;
     Rigidbody2D playerRB;
+    private GameManager gameManager;
+
 
     private float gravityModifier = 1.5f;
 
@@ -15,13 +17,13 @@ public class PlayerControl : MonoBehaviour
 
     public bool level1 = true;
     public bool level2 = false;
-    public bool level3 = false;
+   
     
     // Start is called before the first frame update
     void Start()
     {
         myAnimator = GetComponent<Animator>();
-
+        gameManager = GameObject.Find("GameMananager").GetComponent<GameManager>();
         playerRB = GetComponent<Rigidbody2D>();
     }
 
@@ -31,14 +33,14 @@ public class PlayerControl : MonoBehaviour
         Level1();
         Level2();
 
-        myAnimator.SetFloat("Speed", playerRB.velocity.x);
+       
         myAnimator.SetBool("isOnGround", isOnGround);
 
     }
 
    private void Level1()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && isOnGround && level1)
+        if (Input.touchCount > 0 && isOnGround && level1 && gameManager.isGameActive == true)
         {
             playerRB.velocity = new Vector2(playerRB.velocity.x, jumpForce);
             isOnGround = false;
@@ -47,9 +49,11 @@ public class PlayerControl : MonoBehaviour
 
     private void Level2()
     {
-        if (Input.GetKey(KeyCode.Space) && level2)
+        if (Input.touchCount > 0 && level2 && gameManager.isGameActive == true)
         {
+
             playerRB.AddForce(Vector2.up * floatForce);
+            isOnGround = false;
             GetComponent<Rigidbody2D>().gravityScale = 1;
             
         }
@@ -57,7 +61,7 @@ public class PlayerControl : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.CompareTag("Ground") && isOnGround == false)
+        if((collision.gameObject.CompareTag("Ground") || collision.gameObject.CompareTag("Ground_2")) && isOnGround == false)
         {
             isOnGround = true;
         }
@@ -65,12 +69,7 @@ public class PlayerControl : MonoBehaviour
         if (collision.gameObject.CompareTag("Stone") || collision.gameObject.CompareTag("Obstacle"))
         {
             Destroy(gameObject);
-        }
-
-        if (collision.gameObject.CompareTag("Ground_2") )
-        {
-            level1 = false;
-            level2 = true;
+            gameManager.GameOver();
         }
 
     }
@@ -80,7 +79,20 @@ public class PlayerControl : MonoBehaviour
         if (other.gameObject.CompareTag("Stick"))
         {
             Destroy(other.gameObject);
+            gameManager.score += 5;
+            gameManager.scoreOverText.text = "Score: " + gameManager.score;
         }
+
+        if (other.gameObject.CompareTag("Lvl_2"))
+        {
+            level1 = false;
+            level2 = true;
+            Destroy(GameObject.FindWithTag("SpawnManagerStone"));
+        }
+
     }
+
+
+
 
 }
